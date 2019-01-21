@@ -9,8 +9,8 @@ const controls = [
   { label: "Meat", type: "meat" }
 ];
 
-const BuildControls = props => {
-  <div className={classes.BuildControl}>
+const BuildControls = props => (
+  <div className={classes.BuildControls}>
     {controls.map(ctrl => {
       <BuildControl
         key={ctrl.label}
@@ -18,6 +18,6 @@ const BuildControls = props => {
         added={() => props.ingredientAdded(ctrl.type)}
       />;
     })}
-  </div>;
-};
+  </div>
+);
 export default BuildControls;
