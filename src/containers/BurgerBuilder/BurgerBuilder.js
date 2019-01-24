@@ -30,9 +30,11 @@ class BurgerBuilder extends Component {
     purchased: false
   };
 
+  //only purchaseable if total ingredients is greater than 0
+  //turning ingredients object into array of keys,
+  //mapping to get array of values
+  //reducing into sum of total ingredients
   updatePurchase(ingredients) {
-    //only purchaseable if total ingredients is greater than 1
-    //turning into array of keys, mapping to get array of each value, and reducing to sum of total ingredients
     const ingTotal = Object.keys(ingredients)
       .map(ingKey => {
         return ingredients[ingKey];
@@ -44,15 +46,17 @@ class BurgerBuilder extends Component {
     this.setState({ purchaseable: ingTotal > 0 });
   }
 
+  purchaseHandler = () => {
+    this.setState({ purchased: true });
+  };
+
   addIngredientHandler = type => {
     const origCount = this.state.ingredients[type];
     const updatedCount = origCount + 1;
 
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-
+    const updatedIngredients = { ...this.state.ingredients };
     updatedIngredients[type] = updatedCount;
+
     const priceAddition = INGREDIENT_PRICES[type];
     const origPrice = this.state.totalPrice;
     const newPrice = origPrice + priceAddition;
@@ -66,17 +70,14 @@ class BurgerBuilder extends Component {
 
   removeIngredientHandler = type => {
     const origCount = this.state.ingredients[type];
-    //condition for negative ingredients, if negative return nothing
+    const updatedCount = origCount - 1;
+    //condition for negative ingredients
     if (origCount <= 0) {
       return;
     }
-    const updatedCount = origCount - 1;
-
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-
+    const updatedIngredients = { ...this.state.ingredients };
     updatedIngredients[type] = updatedCount;
+
     const priceDeduction = INGREDIENT_PRICES[type];
     const origPrice = this.state.totalPrice;
     const newPrice = origPrice - priceDeduction;
@@ -88,20 +89,16 @@ class BurgerBuilder extends Component {
     this.updatePurchase(updatedIngredients);
   };
 
-  purchaseHandler = () => {
-    this.setState({ purchased: true });
-  };
-
   render() {
     //disabling the less button if ingredients are 0
     const disabledIng = {
       ...this.state.ingredients
     };
-    //setting values to true or false if ingredients are at 0
+    //setting values to true or false when ing are at 0
     for (let key in disabledIng) {
       disabledIng[key] = disabledIng[key] <= 0;
     }
-    // {salad: true, meat: false, etc...}
+    // => {salad: true, meat: false, etc...}
 
     return (
       <Aux>
