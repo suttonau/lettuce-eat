@@ -46,10 +46,6 @@ class BurgerBuilder extends Component {
     this.setState({ purchaseable: ingTotal > 0 });
   }
 
-  purchaseHandler = () => {
-    this.setState({ purchased: true });
-  };
-
   addIngredientHandler = type => {
     const origCount = this.state.ingredients[type];
     const updatedCount = origCount + 1;
@@ -89,6 +85,14 @@ class BurgerBuilder extends Component {
     this.updatePurchase(updatedIngredients);
   };
 
+  purchaseHandler = () => {
+    this.setState({ purchased: true });
+  };
+
+  cancelPurchaseHandler = () => {
+    this.setState({ purchased: false });
+  };
+
   render() {
     //disabling the less button if ingredients are 0
     const disabledIng = {
@@ -102,7 +106,10 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Modal show={this.state.purchased}>
+        <Modal
+          show={this.state.purchased}
+          modalClosed={this.cancelPurchaseHandler}
+        >
           <OrderSummary ingredients={this.state.ingredients} />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
