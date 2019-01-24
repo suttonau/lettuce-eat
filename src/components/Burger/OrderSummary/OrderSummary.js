@@ -1,5 +1,6 @@
 import React from "react";
 import Aux from "../../../hoc/Aux";
+import Button from "../../UI/Button/Button";
 
 const OrderSummary = props => {
   //transforms state into array
@@ -18,6 +19,12 @@ const OrderSummary = props => {
       <p>Burger with these ingredients</p>
       <ul>{ingredientSummary}</ul>
       <p>Continue to Checkout?</p>
+      <Button btnType="Danger" clicked={props.purchaseCancelled}>
+        Cancel
+      </Button>
+      <Button btnType="Success" clicked={props.purchaseContinue}>
+        Continue
+      </Button>
     </Aux>
   );
 };
