@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import classes from "./Modal.css";
-import Aux from "../../../hoc/Aux";
+import Aux from "../../../hoc/Aux/Aux";
 //Backdrop here bc its related to Modal
 //rendered bc if modal is shown, backdrop should be shown
 import Backdrop from "../Backdrop/Backdrop";
 
 class Modal extends Component {
+  //this could be a functional component, just implementing lifecycle hook checks for performance
+
+  //only rerendering ingredient list When modal is shown
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.show !== this.props.show;
   }
