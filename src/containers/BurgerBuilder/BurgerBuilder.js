@@ -117,7 +117,7 @@ class BurgerBuilder extends Component {
       deliveryMethod: "fast"
     };
 
-    //Firebase Post Request
+    //Firebase Post Request with axios
     axios
       .post("/orders.json", order)
       .then(response => {

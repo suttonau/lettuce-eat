@@ -7,20 +7,24 @@ const withErrorHandler = (WrappedComponent, axios) => {
     state = {
       error: null
     };
-
     //FIXME: Change this to a constructor, so it will throw errors if something happens in render
     componentDidMount() {
-      axios.interceptors.request.use(request => {
+      this.reqInterceptor = axios.interceptors.request.use(request => {
         this.setState({ error: null });
         return request;
       });
 
-      axios.interceptors.response.use(
+      this.respInterceptor = axios.interceptors.response.use(
         response => response,
         error => {
           this.setState({ error: error });
         }
       );
+    }
+
+    componentWillUnmount() {
+      axios.interceptors.request.eject(this.reqInterceptor);
+      axios.interceptors.request.eject(this.respInterceptor);
     }
 
     errorConfirmedHanlder = () => {
